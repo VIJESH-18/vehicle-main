@@ -1,0 +1,54 @@
+#include <stdio.h>
+    printf("Enter customer name: ");
+    fgets(serviceRequests[*count].customerName, sizeof(serviceRequests[*count].customerName), stdin);
+    serviceRequests[*count].customerName[strcspn(serviceRequests[*count].customerName, "\n")] = '\0'; // Remove the newline character
+
+    printf("Enter vehicle number: ");
+    fgets(serviceRequests[*count].vehicleNo, sizeof(serviceRequests[*count].vehicleNo), stdin);
+    serviceRequests[*count].vehicleNo[strcspn(serviceRequests[*count].vehicleNo, "\n")] = '\0'; // Remove the newline character
+
+    printf("Enter faculty name assigned: ");
+    fgets(serviceRequests[*count].facultyName, sizeof(serviceRequests[*count].facultyName), stdin);
+    serviceRequests[*count].facultyName[strcspn(serviceRequests[*count].facultyName, "\n")] = '\0'; // Remove the newline character
+
+    printf("Enter time allocation (in hours): ");
+    scanf("%d", &serviceRequests[*count].timeAllocation);
+    getchar(); // to consume the newline character
+
+    printf("Enter delivery date (dd/mm/yyyy): ");
+    fgets(serviceRequests[*count].deliveryDate, sizeof(serviceRequests[*count].deliveryDate), stdin);
+    serviceRequests[*count].deliveryDate[strcspn(serviceRequests[*count].deliveryDate, "\n")] = '\0'; // Remove the newline character
+
+    printf("Enter handover date (dd/mm/yyyy): "); // New input for handover date
+    fgets(serviceRequests[*count].handoverDate, sizeof(serviceRequests[*count].handoverDate), stdin);
+    serviceRequests[*count].handoverDate[strcspn(serviceRequests[*count].handoverDate, "\n")] = '\0'; // Remove the newline character
+
+    printf("Enter service cost: ");
+    scanf("%f", &serviceRequests[*count].serviceCost);
+    getchar(); // to consume the newline character
+
+    printf("Enter service type: ");
+    fgets(serviceRequests[*count].serviceType, sizeof(serviceRequests[*count].serviceType), stdin);
+    serviceRequests[*count].serviceType[strcspn(serviceRequests[*count].serviceType, "\n")] = '\0'; // Remove the newline character
+
+    (*count)++;
+}
+
+void displayServiceRequest(struct ServiceRequest serviceRequests[], int count, char searchTerm[], int searchBy) {
+    for (int i = 0; i < count; i++) {
+        if ((searchBy == 1 && strcmp(serviceRequests[i].customerName, searchTerm) == 0) ||
+            (searchBy == 2 && strcmp(serviceRequests[i].vehicleNo, searchTerm) == 0)) {
+            printf("\nService Request:\n");
+            printf("Customer Name: %s\n", serviceRequests[i].customerName);
+            printf("Vehicle Number: %s\n", serviceRequests[i].vehicleNo);
+            printf("Faculty Name Assigned: %s\n", serviceRequests[i].facultyName);
+            printf("Time Allocation: %d hours\n", serviceRequests[i].timeAllocation);
+            printf("Delivery Date: %s\n", serviceRequests[i].deliveryDate);
+            printf("Handover Date: %s\n", serviceRequests[i].handoverDate); // New output for handover date
+            printf("Service Cost: %.2f\n", serviceRequests[i].serviceCost);
+            printf("Service Type: %s\n", serviceRequests[i].serviceType);
+            return;
+        }
+    }
+     printf("No service request found for %s: %s\n", searchBy == 1 ? "customer" : "vehicle number", searchTerm);
+}
